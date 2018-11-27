@@ -25,9 +25,12 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-module com.gluonhq.attach.core {
+module com.gluonhq.attach.plugins.storage {
     requires transitive java.logging;
-    requires transitive javafx.graphics;
+    requires com.gluonhq.attach.core;
     
-    exports com.gluonhq.attach.core;
+    uses com.gluonhq.attach.plugins.storage.StorageService;
+    
+    exports com.gluonhq.attach.plugins.storage;
+    exports com.gluonhq.attach.plugins.storage.impl to com.gluonhq.attach.core;
 }

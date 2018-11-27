@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, Gluon
+ * Copyright (c) 2016, 2018 Gluon
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,9 +25,55 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-module com.gluonhq.attach.core {
-    requires transitive java.logging;
-    requires transitive javafx.graphics;
-    
-    exports com.gluonhq.attach.core;
+package com.gluonhq.attach.plugins.storage.impl;
+
+
+import com.gluonhq.attach.plugins.storage.StorageService;
+import java.io.File;
+import java.util.Optional;
+
+/**
+ * An implementation of StorageService, it currently writes to the users home directory under '.gluon'
+ */
+public class DesktopStorageService implements StorageService {
+
+    @Override
+    public Optional<File> getPrivateStorage() {
+        try {
+            String home = System.getProperty("user.home");
+            File f = new File(home, ".gluon");
+            if (!f.isDirectory()) {
+                f.mkdirs();
+            }
+            return Optional.of(f);
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public Optional<File> getPublicStorage(String subdirectory) {
+        try {
+            String home = System.getProperty("user.home");
+            File f;
+            if (null == subdirectory) {
+                f = new File(home);
+            } else {
+                f = new File(home, subdirectory);
+            }
+            return Optional.of(f);
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public boolean isExternalStorageWritable() {
+        return true;
+    }
+
+    @Override
+    public boolean isExternalStorageReadable() {
+        return true;
+    }
 }

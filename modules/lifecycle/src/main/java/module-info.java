@@ -26,7 +26,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 module com.gluonhq.attach.plugins.lifecycle {
-    requires java.logging;
+    requires transitive java.logging;
     requires com.gluonhq.attach.core;
     
     uses com.gluonhq.attach.plugins.lifecycle.LifecycleService;

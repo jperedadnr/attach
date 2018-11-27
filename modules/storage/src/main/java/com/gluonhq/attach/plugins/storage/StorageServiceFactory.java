@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, Gluon
+ * Copyright (c) 2016, 2018 Gluon
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,9 +25,14 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-module com.gluonhq.attach.core {
-    requires transitive java.logging;
-    requires transitive javafx.graphics;
+package com.gluonhq.attach.plugins.storage;
+
+import com.gluonhq.attach.core.DefaultServiceFactory;
+
+public class StorageServiceFactory extends DefaultServiceFactory<StorageService> {
     
-    exports com.gluonhq.attach.core;
+    public StorageServiceFactory() {
+        super(StorageService.class);
+    }
+
 }

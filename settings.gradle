@@ -1,7 +1,9 @@
-include "core", "lifecycle"
+include "core", "lifecycle", "display", "storage"
 
 project(":core").projectDir = file("modules/core")
 project(":lifecycle").projectDir = file("modules/lifecycle")
+project(":storage").projectDir = file("modules/storage")
+project(":display").projectDir = file("modules/display")
 
 rootProject.name = 'Attach'
 

@@ -25,9 +25,24 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-module com.gluonhq.attach.core {
-    requires transitive java.logging;
-    requires transitive javafx.graphics;
-    
-    exports com.gluonhq.attach.core;
-}
+
+#import <UIKit/UIKit.h>
+#include "jni.h"
+
+#define GLASS_CHECK_EXCEPTION(ENV)                                                 \
+do {                                                                               \
+jthrowable t = (*ENV)->ExceptionOccurred(ENV);                                 \
+if (t) {                                                                       \
+(*ENV)->ExceptionClear(ENV);                                               \
+/* TODO: (*ENV)->CallStaticVoidMethod(ENV, jApplicationClass, jApplicationReportException, t);      */         \
+};                                                                             \
+} while (0)
+
+@interface Display : UIViewController {}
+    - (void) isIPhoneX;
+    - (void) startObserver;
+    - (void) stopObserver;
+    - (NSString*) getNotch;
+@end
+
+void sendNotch();
