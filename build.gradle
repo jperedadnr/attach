@@ -52,6 +52,9 @@ subprojects {
                 java.srcDirs = ['src/main/', 'desktop/' ]
             }
         }
+        jar {
+            classifier = 'desktop'
+        }
     } else if (project.hasProperty('ios')) {
         sourceSets {
             main {
@@ -76,7 +79,6 @@ project(":display") {
     }
 
     if (project.hasProperty('desktop')) {
-
         ext.description = 'API to access display features for the desktop platform'
     } else if (project.hasProperty('ios')) {
         ext.description = 'API to access display features for the iOS platform'
@@ -90,6 +92,7 @@ project(":display") {
         }
 
         jar {
+            classifier = 'ios'
             dependsOn xcodebuild
             from("$project.buildDir/native/lib${service}.a")
                     {
@@ -119,6 +122,7 @@ project(":lifecycle") {
         }
 
         jar {
+            classifier = 'ios'
             dependsOn xcodebuild
             from("$project.buildDir/native/lib${service}.a")
             {
@@ -148,6 +152,7 @@ project(":storage") {
         }
 
         jar {
+            classifier = 'ios'
             dependsOn xcodebuild
             from("$project.buildDir/native/lib${service}.a")
             {
