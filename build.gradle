@@ -1,0 +1,99 @@
+apply plugin: 'base'
+apply plugin: 'java'
+
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            url 'https://plugins.gradle.org/m2/'
+        }
+    }
+
+    dependencies {
+        classpath 'org.openjfx:javafx-plugin:0.0.5'
+    }
+}
+
+group = 'com.gluonhq'
+version = '4.0.0-SNAPSHOT'
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'maven'
+    apply plugin: 'org.openjfx.javafxplugin'
+    
+    repositories {
+        maven {
+            url "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+        maven {
+            url "https://oss.sonatype.org/content/repositories/releases"
+        }
+        jcenter()
+        mavenCentral()
+    }
+    
+    if (project.hasProperty('ios')) {
+        apply from: rootProject.file('gradle/ios-build.gradle')
+    }
+    
+    javafx {
+        modules = ['javafx.controls']
+    }
+    
+    group = rootProject.group
+    version = rootProject.version
+    
+    archivesBaseName = 'attach-' + name.replaceAll("/", "-")
+    
+    if (project.hasProperty('desktop')) {
+        sourceSets {
+            main {
+                java.srcDirs = ['src/main/', 'desktop/' ]
+            }
+        }
+    } else if (project.hasProperty('ios')) {
+        sourceSets {
+            main {
+                java.srcDirs = ['src/main/', 'ios/' ]
+            }
+        }
+    }
+}
+
+project(":core") {
+    if (project.hasProperty('desktop')) {
+        ext.description = 'API to access common features for the desktop platform'
+    } else if (project.hasProperty('ios')) {
+        ext.description = 'API to access features for the iOS platform'
+    }
+}
+
+project(":lifecycle") {
+    dependencies {
+        compile project(':core')
+    }
+
+    if (project.hasProperty('desktop')) {
+        
+        ext.description = 'API to access common lifecycle features for the desktop platform'
+    } else if (project.hasProperty('ios')) {
+        ext.description = 'API to access lifecycle features for the iOS platform'
+
+        def service = "Lifecycle"
+
+        task xcodebuild {
+            doLast {
+                xcodebuildIOS("$project.buildDir","$project.projectDir", "$service")
+            }
+        }
+
+        jar {
+            dependsOn xcodebuild
+            from("$project.buildDir/native/lib${service}.a")
+            {
+                into "native"
+            }
+        }
+    }
+}
