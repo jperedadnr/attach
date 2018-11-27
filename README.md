@@ -53,13 +53,29 @@ To build the iOS Services:
 
 ### How to build and install Attach ###
 
-To build the Attach services for dekstop, on the project's root, run:
+To build the Attach services on the project's root, run:
 
-`./gradlew -Pdesktop clean build`
+`./gradlew clean build`
 
 If you want to install them, run:
 
-`./gradlew -Pdesktop clean install`
+`./gradlew  clean install`
+
+To build/install for desktop, add the option `-Pdesktop`. 
+
+To build/install for iOS, add the option `-Pios`.
 
 When the process finishes successfully, the different services can be added to a Gluon Mobile project 
 by including `mavenLocal()` in the list of repositories.
+
+For instance, the Lifecycle service for desktop can be added to the project like:
+
+```
+repositories {
+    mavenLocal()
+}
+
+dependencies {
+    compile 'com.gluonhq:attach-lifecycle:4.0.0-SNAPSHOT:desktop'
+}
+```
