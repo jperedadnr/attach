@@ -37,19 +37,13 @@ Gluon Attach is frequently released, and this is only required in case you want 
 
 These are the requisites:
 
-* A recent version of [JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
-* Gradle 2.2 or superior. 
-
-To build the Android Services:
-
-* Android SDK: the android sdk must be downloaded. The required Android platform is `android-25`.
-* `ANDROID_HOME` has to be defined as an environment variable, typically by adding it as a gradle property to `~/.gradle/gradle.properties`.
-* Extras/Android Support Repository and Extras/Google Repository that can be installed with the Android SDK Manager.
+* A recent version of [JDK 11](http://jdk.java.net/11/)
+* Gradle 4.10 or superior. 
 
 To build the iOS Services:
  
 * A Mac with with MacOS X 10.11.5 or superior
-* XCode 8.x or superior
+* XCode 9.x or superior
 
 ### How to build and install Attach ###
 
